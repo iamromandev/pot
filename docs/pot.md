@@ -104,3 +104,19 @@ The gap Pot fills is combining these concerns in one unit that runs anywhere. wa
 - Name the first use case.
 - Confirm the lite-pot profile for microcontrollers.
 - Confirm the Rust repository to start in.
+
+## Decisions from the 2026-10-08 review
+
+Each of these was chosen by Roman on a decision card in the project thread.
+
+- **First use case:** personal devices (laptop, phone, home server over LAN and P2P).
+- **Microcontrollers:** deferred. The default is that the first build targets full pots only. Not yet confirmed.
+- **Runtime profiles** (`full`, `lite`, `gateway`): fixed at restart, not changeable while running. Not shareable as files for now.
+- **Lost key:** no recovery. The pot gets a new identity, and peers re-trust it by hand.
+- **Open-network abuse:** per-skill rate limits, plus a small proof-of-work to join discovery.
+- **Phones:** relay through the home pot, which holds messages and passes calls through while the phone sleeps. A phone is never a server.
+- **Delivery guarantee:** the caller picks per call, never above the ceiling the skill declares.
+- **Envelopes on LoRa and BLE:** compact binary format with short IDs. Every call still carries a full signature.
+- **Native and WebAssembly skills:** two interfaces for now. WIT is the candidate for later.
+- **Skill names on the open network:** readable name (for example `image.resize`), with the publisher's key as a tiebreaker.
+- **Debugging:** every envelope carries a trace ID, and each pot on the path logs it.
